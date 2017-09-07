@@ -1,0 +1,36 @@
+.page {
+  font-family: 'Nunito', sans-serif;
+  margin: 0px;
+  background-color: #F5F5F5;
+  color: #777777;
+}
+
+.title {
+  background-color: #3F51B5;
+  color: #FFFFFF;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 45px;
+  font-size: 25px;
+}
+
+.avatar {
+  width: 65px;
+}
+
+.contact {
+  margin: 15px;
+  background-color: #FFFFFF;
+  padding: 15px;
+  width : 300px;
+}
+
+.action {
+ margin: 30px;
+}
+
+.trash {
+  color: #777777;
+}
