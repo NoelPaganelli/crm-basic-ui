@@ -1,6 +1,12 @@
 $("document").ready(function() {
 
   $("#count-contact").html($(".contact").length);
+  if($(".contact").length > 1) {
+    $("#contact-plurial").html("s");
+  }
+  if($(".contact").length <=1 ) {
+    $("#contact-plurial").html("");
+  }
 
   $('.avatar').click(function(){
      $(this).closest("table").find(".data-contact").toggle(1000);
