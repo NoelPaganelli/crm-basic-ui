@@ -14,11 +14,12 @@
     <link rel="stylesheet" href="./style.css">
     <script src="https://use.fontawesome.com/f83971ce92.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <script src="./script.js"></script>
   </head>
   <body class="page">
 
-    <h1 class="title">Liste des clients: </h1>
-
+    <h1 class="title"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Liste de <span id="count-contact"></span> contact<span id="contact-plurial"></span></h1>
+    Add contact: <span class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#modal-add"></span>
     <div class="container">
       <div class="row">
 
@@ -27,14 +28,15 @@
             <table>
               <tr>
                 <td><img class="avatar img-circle" src="https://lacapsule.academy/wks1/team-<%=i+1%>.jpg"></td>
-              <tr>
-                <td class="text-center"><i class="fa fa-user" aria-hidden="true"></i></td><td> <%= clients[i].firstName %> <%= clients[i].lastName %></td>
+             </tr>
+              <tr class="data-contact">
+                <td class="text-center"><i class="fa fa-user" aria-hidden="true"></i></td><td> <%= clients[i].firstName %><i data-position="<%=i%>" data-property="firstName" class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#modal-update"></i>  <%= clients[i].lastName %><i data-position="<%=i%>" data-property="lastName" class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#modal-update"></i></td>
               </tr>
-              <tr>
-                <td class="text-center"><i class="fa fa-envelope" aria-hidden="true"></i></td><td> <%= clients[i].email %></td>
+              <tr class="data-contact">
+                <td class="text-center"><i class="fa fa-envelope" aria-hidden="true"></i></td><td> <%= clients[i].email %><i data-position="<%=i%>" data-property="email"  class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#modal-update"></i></td>
               </tr>
-              <tr>
-                <td class="text-center"><i class="fa fa-phone" aria-hidden="true"></i></td><td> <%= clients[i].phone %></td>
+              <tr class="data-contact">
+                <td class="text-center"><i class="fa fa-phone" aria-hidden="true"></i></td><td> <%= clients[i].phone %><i data-position="<%=i%>" data-property="phone"  class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#modal-update"></i></td>
               </tr>
               <tr>
                 <td class="text-center"><a class="trash" href="./delete?i=<%=i%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
@@ -46,39 +48,66 @@
       </div>
     </div>
 
-    <div class="action">
-      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+   <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
 
-      <form action="./add">
-        <i class="fa fa-user" aria-hidden="true"></i>
-        <input placeholder="Prenom" type="text" name="firstName" value="">
-        <input placeholder="Nom" type="text" name="lastName" value="">
-        <br>
-        <i class="fa fa-envelope" aria-hidden="true"></i>
-        <input placeholder="Email" type="text" name="email" value="">
-        <br>
-        <i class="fa fa-phone" aria-hidden="true"></i>
-        <input placeholder="Téléphone" type="text" name="phone" value="">
-        <br>
-        <input class="btn btn-info btn-sm" type="submit" value="valider">
-      </form>
-    </div>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Add contact</h4>
+          </div>
+          <div class="modal-body">
+            <div id="add-error"></div>
+             <form id="add-form" action="./add">
 
-    <div class="action">
-      <i class="fa fa-pencil" aria-hidden="true"></i>
+               <div class="form-group">
+                 <label for="add-firstname">Prenom</label>
+                 <input class="form-control" id="add-firstname" placeholder="Prenom" type="text" name="firstName" value="">
+               </div>
 
-      <form action="./update">
-        Propriété:
-        <input type="text" name="property" value="">
-        <br>
-        Nouvelle valeur:
-        <input type="text" name="value" value="">
-        <br>
-        Position:
-        <input type="text" name="i" value="">
-        <br>
-        <input class="btn btn-info btn-sm" type="submit" value="valider">
-      </form>
+               <div class="form-group">
+                 <label for="add-email">Nom</label>
+                 <input type="text" class="form-control" id="add-lastname" placeholder="Nom" type="text" name="lastName" value="">
+               </div>
+
+               <div class="form-group">
+                 <label for="add-email">Email</label>
+                 <input type="email" class="form-control" id="add-email" placeholder="Email" name="email" value="">
+               </div>
+               <div class="form-group">
+                 <label for="add-phone">Téléphone</label>
+                 <input type="text" class="form-control"  id="add-phone" placeholder="Téléphone" name="phone" value="">
+               </div>
+
+               <button type="submit" class="btn btn-default">Valider</button>
+             </form>
+           </div>
+       </div>
+     </div>
+   </div>
+
+
+    <div class="modal fade" id="modal-update" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Update contact</h4>
+          </div>
+          <div class="modal-body">
+            <form action="./update">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nouvelle valeur</label>
+                <input type="text" class="form-control" name="value" value="">
+              </div>
+              <input type="hidden" name="i" id="update-position" value="">
+              <input type="hidden" name="property" id="update-property" value="">
+              <button type="submit" class="btn btn-default">Valider</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
   </body>
